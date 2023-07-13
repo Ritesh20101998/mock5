@@ -76,7 +76,7 @@ userRouter.post('/logout',async(req,res)=>{
             return res.status(401).json({ message: "No token provided" });
         }
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.jwt_SECRET);
 
         const user = await User.findById(decoded.userId);
 
@@ -88,6 +88,7 @@ userRouter.post('/logout',async(req,res)=>{
         res.status(200).json({ message: "Logout successful" });
     } catch (err) {
         console.error("Error logging out:", err);
+        res.send(err)
         res.status(500).json({ error: "Internal server error" });
     }
 })
